@@ -6,14 +6,12 @@
 
 **Your developer dashboard, living right in the sidebar.**
 
-[![Version](https://img.shields.io/visual-studio-marketplace/v/melvsanity.devboard?color=4B8CF7&label=marketplace&logo=visual-studio-code&logoColor=white)](https://marketplace.visualstudio.com/items?itemName=melvsanity.devboard)
-[![Installs](https://img.shields.io/visual-studio-marketplace/i/melvsanity.devboard?color=34d399&logo=visual-studio-code&logoColor=white)](https://marketplace.visualstudio.com/items?itemName=melvsanity.devboard)
-[![Rating](https://img.shields.io/visual-studio-marketplace/stars/melvsanity.devboard?color=fbbf24)](https://marketplace.visualstudio.com/items?itemName=melvsanity.devboard)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+![Version](https://img.shields.io/badge/version-1.0.0-pink?style=flat-square)
+![VS Code](https://img.shields.io/badge/VS%20Code-%5E1.75.0-blue?style=flat-square&logo=visualstudiocode)
+![License](https://img.shields.io/badge/license-MIT-purple?style=flat-square)
 
 Track TODOs · Pin files · Take notes — all without leaving the editor.
-
-[Install from Marketplace](https://marketplace.visualstudio.com/items?itemName=melvsanity.devboard) · [Report a Bug](https://github.com/yourusername/devboard/issues) · [Request a Feature](https://github.com/yourusername/devboard/issues)
 
 </div>
 
