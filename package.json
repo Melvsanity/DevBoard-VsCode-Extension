@@ -2,7 +2,7 @@
   "name": "devboard",
   "displayName": "DevBoard",
   "description": "Your developer dashboard — TODO tracker, pinned files, and project notes in the sidebar.",
-  "version": "2.0.0",
+  "version": "1.0.0",
   "engines": { "vscode": "^1.75.0" },
   "categories": ["Other"],
   "publisher": "melvsanity",

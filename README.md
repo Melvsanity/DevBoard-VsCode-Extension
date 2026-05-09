@@ -119,26 +119,11 @@ To keep your project notes out of git, add this to your `.gitignore`:
 
 ---
 
-## Release Notes
-
-### 2.0.0 — Unified Panel
-- Rebuilt as a single unified webview panel — sections can no longer be accidentally hidden or rearranged
-- Collapsible sections with smooth chevron indicators
-- Improved notes toolbar with character count and save confirmation
-- Tag groups are now individually collapsible inside the TODO Tracker
-
-### 1.0.0 — Initial Release
-- TODO Tracker with tag grouping
-- Pinned Files with persistent storage
-- Project Notepad with auto-save
-
----
-
 ## Contributing
 
 Contributions are welcome! If you find a bug or have a feature idea:
 
-1. [Open an issue](https://github.com/yourusername/devboard/issues) to discuss it
+1. [Open an issue](https://github.com/Melvsanity/DevBoard-VsCode-Extension/issues) to discuss it
 2. Fork the repo and create a branch
 3. Submit a pull request
 
@@ -146,4 +131,4 @@ Contributions are welcome! If you find a bug or have a feature idea:
 
 ## License
 
-MIT © [melvsanity](https://github.com/yourusername)
+MIT © [melvsanity](https://github.com/Melvsanity)
