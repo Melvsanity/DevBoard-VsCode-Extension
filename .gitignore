@@ -1,0 +1,24 @@
+# DevBoard
+.vscode/devboard-notes.md
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+out/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# VSCode test output
+.vscode-test/
+
+# Package files
+*.vsix
