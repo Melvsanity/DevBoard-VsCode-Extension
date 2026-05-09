@@ -1,43 +1,81 @@
+<div align="center">
+
+<img src="images/devboard-extension-icon.png" alt="DevBoard Logo" width="128" height="128" />
+
 # DevBoard
 
-> Your developer dashboard, living right in the sidebar.
+**Your developer dashboard, living right in the sidebar.**
 
-DevBoard is a lightweight VSCode extension that keeps everything you need in one place — track TODOs across your codebase, pin your most-used files, and jot down project notes without ever leaving the editor.
+[![Version](https://img.shields.io/visual-studio-marketplace/v/melvsanity.devboard?color=4B8CF7&label=marketplace&logo=visual-studio-code&logoColor=white)](https://marketplace.visualstudio.com/items?itemName=melvsanity.devboard)
+[![Installs](https://img.shields.io/visual-studio-marketplace/i/melvsanity.devboard?color=34d399&logo=visual-studio-code&logoColor=white)](https://marketplace.visualstudio.com/items?itemName=melvsanity.devboard)
+[![Rating](https://img.shields.io/visual-studio-marketplace/stars/melvsanity.devboard?color=fbbf24)](https://marketplace.visualstudio.com/items?itemName=melvsanity.devboard)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+Track TODOs · Pin files · Take notes — all without leaving the editor.
+
+[Install from Marketplace](https://marketplace.visualstudio.com/items?itemName=melvsanity.devboard) · [Report a Bug](https://github.com/yourusername/devboard/issues) · [Request a Feature](https://github.com/yourusername/devboard/issues)
+
+</div>
+
+---
+
+## Overview
+
+DevBoard is a zero-config VSCode extension that gives you a personal dashboard in the sidebar. Everything lives in one unified panel that can't be accidentally closed or rearranged — it's always right there when you need it.
+
+No external dependencies. No backend. No setup.
 
 ---
 
 ## Features
 
 ### 📋 TODO Tracker
-Never lose a TODO again. DevBoard scans your entire project and groups every comment tag by type so you can see what needs attention at a glance.
 
-- Detects `TODO`, `FIXME`, `BUG`, `HACK`, `NOTE`, and `XXX`
-- Grouped and color-coded by tag
-- Click any item to jump straight to that line
+Never lose a `TODO` in your codebase again. DevBoard scans every source file in your project and groups comment tags by type so you always know what needs attention.
+
+- Detects **`TODO`**, **`FIXME`**, **`BUG`**, **`HACK`**, **`NOTE`**, and **`XXX`**
+- Color-coded and grouped by tag — highest priority first
+- Click any item to jump straight to that exact line
 - Auto-refreshes every time you save a file
-- Skips `node_modules`, `.git`, `dist`, and other non-source folders
+- Intelligently skips `node_modules`, `.git`, `dist`, `build`, and other non-source directories
 
 ### 📎 Pinned Files
-Keep your most important files one click away, even after closing tabs.
+
+Stop re-opening the same files over and over. Pin the files you're actively working on and they stay in your sidebar — even after closing tabs or restarting VSCode.
 
 - Right-click any file in the Explorer → **DevBoard: Pin File**
-- Pinned files persist across sessions and restarts
-- Click to open, hover to reveal the unpin button
+- Pins persist across sessions and workspace restarts
+- Click any pin to open it instantly
+- Hover to reveal the unpin button
 
 ### ✏️ Notes
-A persistent markdown scratch pad tied to your workspace.
+
+A persistent markdown scratch pad tied to your workspace. Jot down ideas, paste links, record decisions — it's always a glance away.
 
 - Write freely inside the sidebar panel
-- Auto-saves as you type
-- Click **Open in tab ↗** to open as a full editor tab
-- Each workspace keeps its own separate notes
-- Saved to `.vscode/devboard-notes.md` — a real file you can commit or gitignore
+- Auto-saves 500ms after you stop typing
+- **Open in tab ↗** to expand into a full Markdown editor
+- Each workspace has its own independent notes
+- Saved as a real file at `.vscode/devboard-notes.md`
+
+---
+
+## Installation
+
+**Via Marketplace:**
+1. Open VSCode
+2. Press `Ctrl+P` (or `Cmd+P` on Mac)
+3. Run `ext install melvsanity.devboard`
+
+**Via VSIX:**
+1. Download the latest `.vsix` from [Releases](https://github.com/yourusername/devboard/releases)
+2. Open VSCode → Extensions → `···` menu → **Install from VSIX**
 
 ---
 
 ## Usage
 
-Once installed, click the **DevBoard icon** in the Activity Bar to open the panel. All three sections live together in one place and can be collapsed individually.
+Click the **DevBoard icon** in the Activity Bar to open the panel. All three sections are collapsible — click any section header to expand or collapse it.
 
 ### Pinning a file
 1. Right-click any file in the Explorer
@@ -45,59 +83,69 @@ Once installed, click the **DevBoard icon** in the Activity Bar to open the pane
 3. It appears instantly in the Pinned Files section
 
 ### Refreshing TODOs
-Click the **↻** button in the TODO Tracker header, or simply save any file — DevBoard refreshes automatically.
+Click **↻** in the TODO Tracker header, or just save any file — DevBoard refreshes automatically.
 
 ### Opening notes in a full tab
-Click the **Open in tab ↗** button inside the Notes section to open your notes as a full Markdown editor tab.
+Click **Open in tab ↗** inside the Notes section to open your notes as a full Markdown editor.
 
 ---
 
 ## Supported Languages
 
-DevBoard scans TODO comments in the following file types:
+DevBoard scans TODO comments across all major file types:
 
-`js` `ts` `jsx` `tsx` `py` `java` `c` `cpp` `cs` `go` `rb` `php` `swift` `kt` `rs` `vue` `html` `css` `scss` `sh` `yaml` `yml` `md`
-
----
-
-## Extension Settings
-
-No configuration required. DevBoard works out of the box.
+| Category | Extensions |
+|---|---|
+| JavaScript / TypeScript | `js` `ts` `jsx` `tsx` |
+| Systems | `c` `cpp` `cs` `rs` `go` `swift` `kt` |
+| Backend | `py` `java` `rb` `php` |
+| Web | `vue` `html` `css` `scss` |
+| Config & Docs | `sh` `yaml` `yml` `md` |
 
 ---
 
 ## Gitignore
 
-If you don't want your project notes committed to git, add this to your `.gitignore`:
+To keep your project notes out of git, add this to your `.gitignore`:
 
-```
+```gitignore
 .vscode/devboard-notes.md
 ```
 
 ---
 
+## Requirements
+
+- VSCode `1.75.0` or higher
+- No other dependencies
+
+---
+
 ## Release Notes
 
-### 2.0.0
-- Rebuilt as a single unified panel — no more accidentally hiding sections
-- All three features live in one unbreakable sidebar view
-- Collapsible sections with chevron indicators
-- Improved notes toolbar with character count and save indicator
+### 2.0.0 — Unified Panel
+- Rebuilt as a single unified webview panel — sections can no longer be accidentally hidden or rearranged
+- Collapsible sections with smooth chevron indicators
+- Improved notes toolbar with character count and save confirmation
+- Tag groups are now individually collapsible inside the TODO Tracker
 
-### 1.0.0
-- Initial release
-- TODO Tracker, Pinned Files, and Project Notepad
+### 1.0.0 — Initial Release
+- TODO Tracker with tag grouping
+- Pinned Files with persistent storage
+- Project Notepad with auto-save
 
 ---
 
 ## Contributing
 
-Found a bug or have a feature request? Open an issue on [GitHub](https://github.com/yourusername/devboard).
+Contributions are welcome! If you find a bug or have a feature idea:
 
-Pull requests are welcome!
+1. [Open an issue](https://github.com/yourusername/devboard/issues) to discuss it
+2. Fork the repo and create a branch
+3. Submit a pull request
 
 ---
 
 ## License
 
-MIT © melvsanity
+MIT © [melvsanity](https://github.com/yourusername)

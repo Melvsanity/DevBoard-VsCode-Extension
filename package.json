@@ -8,7 +8,7 @@
   "publisher": "melvsanity",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/devboard"
+    "url": "https://github.com/Melvsanity/DevBoard-VsCode-Extension.git"
   },
   "activationEvents": ["onStartupFinished"],
   "icon": "images/devboard-extension-icon.png",
