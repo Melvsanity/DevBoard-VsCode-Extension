@@ -219,13 +219,10 @@ class DevBoardPanel {
   .tag-count { margin-left: auto; font-size: 10px; opacity: 0.5; font-weight: 400; }
   .tag-items { display: none; }
   .tag-items.open { display: block; }
-  .todo-item {
-    display: flex; align-items: center; gap: 8px;
-    padding: 4px 12px 4px 28px; cursor: pointer; line-height: 1.4;
-  }
+  .todo-item { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 8px 12px 8px 28px; cursor: pointer; border-left: 2px solid transparent; }
   .todo-item:hover { background: var(--vscode-list-hoverBackground); }
-  .todo-text { flex: 1; opacity: 0.85; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .todo-loc { font-size: 10px; color: var(--vscode-descriptionForeground); white-space: nowrap; flex-shrink: 0; }
+  .todo-text { width: 100%; font-size: 12px; line-height: 1.4; opacity: 0.92; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .todo-loc { font-size: 10px; line-height: 1.3; color: var(--vscode-descriptionForeground); opacity: 0.7; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .empty-state { padding: 16px 12px; color: var(--vscode-descriptionForeground); font-size: 11px; opacity: 0.7; }
 
   /* ── Notes ── */
@@ -361,8 +358,8 @@ class DevBoardPanel {
         const safeText = (text || tag).replace(/</g,'&lt;').replace(/>/g,'&gt;');
         const message = JSON.stringify({ type: 'openTodo', filePath, line, column: column || 0 }).replace(/"/g, '&quot;');
         return \`<div class="todo-item" onclick="sendMsg(\${message})">
-          <span class="todo-text">\${safeText}</span>
-          <span class="todo-loc">\${fileName}:\${line+1}</span>
+          <div class="todo-text">\${safeText}</div>
+          <div class="todo-loc">\${filePath}:\${line + 1}</div>
         </div>\`;
       }).join('');
       const groupId = 'tag-' + tag;
