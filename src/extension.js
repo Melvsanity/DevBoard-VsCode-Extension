@@ -13,12 +13,6 @@ function activate(context) {
     provider.refresh();
   });
 
-  // Pin file from explorer right-click
-  vscode.commands.registerCommand('devboard.pinFile', (uri) => {
-    const filePath = uri ? uri.fsPath : vscode.window.activeTextEditor?.document.uri.fsPath;
-    if (filePath) provider.pinFile(filePath);
-  });
-
   // Auto-refresh TODOs on save
   vscode.workspace.onDidSaveTextDocument(() => provider.refresh());
 }

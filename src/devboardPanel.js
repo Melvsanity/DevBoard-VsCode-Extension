@@ -22,12 +22,6 @@ class DevBoardPanel {
         case 'refresh':
           this.refresh();
           break;
-        case 'openPin':
-          this._openFile(msg.filePath);
-          break;
-        case 'unpin':
-          this._unpin(msg.filePath);
-          break;
         case 'saveNotes':
           this._saveNotes(msg.content);
           break;
@@ -42,34 +36,6 @@ class DevBoardPanel {
     if (!this._view) return;
     const todos = scanTodos(vscode.workspace.workspaceFolders);
     this._view.webview.postMessage({ type: 'updateTodos', todos });
-  }
-
-  pinFile(filePath) {
-    const pins = this._getPins();
-    if (!pins.includes(filePath)) {
-      this._setPins([...pins, filePath]);
-      const name = path.basename(filePath);
-      vscode.window.showInformationMessage(`DevBoard: Pinned ${name}`);
-      if (this._view) {
-        this._view.webview.postMessage({ type: 'updatePins', pins: this._getPins() });
-      }
-    }
-  }
-
-  _unpin(filePath) {
-    this._setPins(this._getPins().filter(p => p !== filePath));
-    if (this._view) {
-      this._view.webview.postMessage({ type: 'updatePins', pins: this._getPins() });
-    }
-  }
-
-  _getPins() {
-    return this.context.workspaceState.get('devboard.pins', [])
-      .filter(p => { try { return fs.existsSync(p); } catch { return false; } });
-  }
-
-  _setPins(pins) {
-    this.context.workspaceState.update('devboard.pins', pins);
   }
 
   _getNotes() {
@@ -121,14 +87,12 @@ class DevBoardPanel {
   _render() {
     if (!this._view) return;
     const todos = scanTodos(vscode.workspace.workspaceFolders);
-    const pins = this._getPins();
     const notes = this._getNotes();
-    this._view.webview.html = this._getHtml(todos, pins, notes);
+    this._view.webview.html = this._getHtml(todos, notes);
   }
 
-  _getHtml(todos, pins, notes) {
+  _getHtml(todos, notes) {
     const todosJson = JSON.stringify(todos);
-    const pinsJson = JSON.stringify(pins);
     const notesEscaped = notes
       .replace(/&/g, '&amp;').replace(/</g, '&lt;')
       .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -275,47 +239,6 @@ class DevBoardPanel {
     opacity: 0.7;
   }
 
-  /* ── Pins section ── */
-  .pin-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 5px 12px;
-    cursor: pointer;
-  }
-  .pin-item:hover { background: var(--vscode-list-hoverBackground); }
-  .pin-item:hover .unpin-btn { opacity: 0.6; }
-
-  .pin-name {
-    flex: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .pin-path {
-    font-size: 10px;
-    color: var(--vscode-descriptionForeground);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 80px;
-  }
-
-  .unpin-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--vscode-foreground);
-    opacity: 0;
-    padding: 2px;
-    border-radius: 3px;
-    font-size: 12px;
-    flex-shrink: 0;
-    line-height: 1;
-  }
-  .unpin-btn:hover { opacity: 1 !important; background: var(--vscode-toolbar-hoverBackground); }
-
   /* ── Notes section ── */
   .notes-body { padding: 8px; display: flex; flex-direction: column; gap: 6px; }
 
@@ -383,21 +306,6 @@ class DevBoardPanel {
   </div>
   <div class="section-body open" id="body-todos">
     <div id="todos-content"></div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════
-     PINNED FILES
-════════════════════════════════════════════ -->
-<div class="section" id="sec-pins">
-  <div class="section-header" onclick="toggleSection('pins')">
-    <div class="section-title-left">
-      <span class="chevron open" id="chev-pins">›</span>
-      <span>Pinned Files</span>
-    </div>
-  </div>
-  <div class="section-body open" id="body-pins">
-    <div id="pins-content"></div>
   </div>
 </div>
 
@@ -475,26 +383,6 @@ class DevBoardPanel {
     document.getElementById(id)?.classList.toggle('open');
   }
 
-  // ── Pins rendering ──
-  function renderPins(pins) {
-    const el = document.getElementById('pins-content');
-    if (!pins || pins.length === 0) {
-      el.innerHTML = '<div class="empty-state">📎 Right-click a file → Pin File</div>';
-      return;
-    }
-    el.innerHTML = pins.map(filePath => {
-      const name = filePath.split(/[\\\\/]/).pop();
-      const dir = filePath.split(/[\\\\/]/).slice(-2, -1)[0] || '';
-      const openMessage = JSON.stringify({ type: 'openPin', filePath }).replace(/"/g, '&quot;');
-      const unpinMessage = JSON.stringify({ type: 'unpin', filePath }).replace(/"/g, '&quot;');
-      return \`<div class="pin-item">
-        <span class="pin-name" onclick="sendMsg(\${openMessage})">\${name}</span>
-        <span class="pin-path">\${dir}</span>
-        <button class="unpin-btn" onclick="sendMsg(\${unpinMessage})" title="Unpin">✕</button>
-      </div>\`;
-    }).join('');
-  }
-
   // ── Notes ──
   const textarea = document.getElementById('notepad');
   const charCount = document.getElementById('char-count');
@@ -523,12 +411,10 @@ class DevBoardPanel {
   // ── Message handler ──
   window.addEventListener('message', ({ data }) => {
     if (data.type === 'updateTodos') renderTodos(data.todos);
-    if (data.type === 'updatePins') renderPins(data.pins);
   });
 
   // ── Initial render ──
   renderTodos(${todosJson});
-  renderPins(${pinsJson});
 </script>
 </body>
 </html>`;

@@ -38,10 +38,6 @@
         "command": "devboard.refresh",
         "title": "Refresh TODOs",
         "icon": "$(refresh)"
-      },
-      {
-        "command": "devboard.pinFile",
-        "title": "DevBoard: Pin File"
       }
     ],
     "menus": {
@@ -49,12 +45,6 @@
         {
           "command": "devboard.refresh",
           "when": "view == devboard.panel",
-          "group": "navigation"
-        }
-      ],
-      "explorer/context": [
-        {
-          "command": "devboard.pinFile",
           "group": "navigation"
         }
       ]
