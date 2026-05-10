@@ -6,9 +6,9 @@
 
 **Your developer nexus for TODOs, notes, and workspace focus — all in the sidebar.**
 
-[![Version](https://img.shields.io/visual-studio-marketplace/v/melvsanity.todo-nexus?color=pink&label=marketplace&logo=visual-studio-code&logoColor=white)](https://marketplace.visualstudio.com/items?itemName=melvsanity.todo-nexus)
-[![Installs](https://img.shields.io/visual-studio-marketplace/i/melvsanity.todo-nexus?color=blue&logo=visual-studio-code&logoColor=white)](https://marketplace.visualstudio.com/items?itemName=melvsanity.todo-nexus)
-[![Rating](https://img.shields.io/visual-studio-marketplace/stars/melvsanity.todo-nexus?color=yellow)](https://marketplace.visualstudio.com/items?itemName=melvsanity.todo-nexus)
+![Version](https://img.shields.io/badge/version-1.0.0-pink?style=flat-square)
+![VS Code](https://img.shields.io/badge/VS%20Code-%5E1.75.0-blue?style=flat-square&logo=visualstudiocode)
+![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Mac%20%7C%20Linux-lightgrey?style=flat-square)
 [![License](https://img.shields.io/badge/license-MIT-purple?style=flat-square)](LICENSE)
 
 Track TODOs · Take notes · Stay focused — without leaving your editor.
