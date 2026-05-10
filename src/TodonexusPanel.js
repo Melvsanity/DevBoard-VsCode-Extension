@@ -1,7 +1,7 @@
 const vscode = require('vscode');
 const { scanTodos } = require('./todoScanner');
 
-class DevBoardPanel {
+class TodoNexusPanel {
   constructor(context) {
     this.context = context;
     this._view = null;
@@ -46,7 +46,7 @@ class DevBoardPanel {
 
   _scratchKey() {
     const folders = vscode.workspace.workspaceFolders;
-    return 'devboard.scratch.' + (folders ? folders[0].name : 'default');
+    return 'todonexus.scratch.' + (folders ? folders[0].name : 'default');
   }
 
   _getScratch() {
@@ -66,15 +66,15 @@ class DevBoardPanel {
   }
 
   _noteUri(name) {
-    return vscode.Uri.joinPath(this._notesDir(), 'devboard-' + name + '.md');
+    return vscode.Uri.joinPath(this._notesDir(), 'todonexus-' + name + '.md');
   }
 
   async _getNoteNames() {
     try {
       const entries = await vscode.workspace.fs.readDirectory(this._notesDir());
       return entries
-        .filter(([name]) => name.startsWith('devboard-') && name.endsWith('.md'))
-        .map(([name]) => name.replace(/^devboard-/, '').replace(/\.md$/, ''))
+        .filter(([name]) => name.startsWith('todonexus-') && name.endsWith('.md'))
+        .map(([name]) => name.replace(/^todonexus-/, '').replace(/\.md$/, ''))
         .sort();
     } catch {
       return [];
@@ -219,10 +219,10 @@ class DevBoardPanel {
   .tag-count { margin-left: auto; font-size: 10px; opacity: 0.5; font-weight: 400; }
   .tag-items { display: none; }
   .tag-items.open { display: block; }
-  .todo-item { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 8px 12px 8px 28px; cursor: pointer; border-left: 2px solid transparent; }
+  .todo-item { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 8px 12px 8px 28px; cursor: pointer; }
   .todo-item:hover { background: var(--vscode-list-hoverBackground); }
   .todo-text { width: 100%; font-size: 12px; line-height: 1.4; opacity: 0.92; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .todo-loc { font-size: 10px; line-height: 1.3; color: var(--vscode-descriptionForeground); opacity: 0.7; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .todo-loc { font-size: 10px; color: var(--vscode-descriptionForeground); opacity: 0.7; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .empty-state { padding: 16px 12px; color: var(--vscode-descriptionForeground); font-size: 11px; opacity: 0.7; }
 
   /* ── Notes ── */
@@ -233,13 +233,8 @@ class DevBoardPanel {
   }
   .new-note-btn:hover { opacity: 1; background: var(--vscode-toolbar-hoverBackground); }
 
-  /* Scratch area */
   .scratch-wrap { padding: 8px; border-bottom: 1px solid var(--vscode-sideBarSectionHeader-border, rgba(255,255,255,0.08)); }
-
-  .scratch-toolbar {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 5px;
-  }
+  .scratch-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
   .scratch-label { font-size: 10px; color: var(--vscode-descriptionForeground); opacity: 0.6; text-transform: uppercase; letter-spacing: 0.05em; }
   .scratch-meta { display: flex; align-items: center; gap: 6px; }
   .char-count { font-size: 10px; color: var(--vscode-descriptionForeground); opacity: 0.5; }
@@ -257,7 +252,6 @@ class DevBoardPanel {
   textarea:focus { border-color: var(--vscode-focusBorder); }
   textarea::placeholder { color: var(--vscode-input-placeholderForeground); opacity: 0.5; }
 
-  /* Note file list */
   .note-item {
     display: flex; align-items: center; gap: 6px; padding: 6px 12px;
     border-bottom: 1px solid var(--vscode-sideBarSectionHeader-border, rgba(255,255,255,0.04));
@@ -265,10 +259,7 @@ class DevBoardPanel {
   .note-item:hover { background: var(--vscode-list-hoverBackground); }
   .note-item:hover .note-delete { opacity: 0.5; }
   .note-icon { font-size: 13px; flex-shrink: 0; opacity: 0.7; }
-  .note-name {
-    flex: 1; cursor: pointer; overflow: hidden;
-    text-overflow: ellipsis; white-space: nowrap; font-size: 12px;
-  }
+  .note-name { flex: 1; cursor: pointer; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; }
   .note-name:hover { color: var(--vscode-textLink-foreground); }
   .note-delete {
     background: none; border: none; cursor: pointer;
@@ -276,10 +267,7 @@ class DevBoardPanel {
     padding: 2px 4px; border-radius: 3px; font-size: 11px; flex-shrink: 0;
   }
   .note-delete:hover { opacity: 1 !important; color: #f87171; }
-  .notes-empty {
-    padding: 12px; color: var(--vscode-descriptionForeground);
-    font-size: 11px; opacity: 0.6; line-height: 1.8;
-  }
+  .notes-empty { padding: 12px; color: var(--vscode-descriptionForeground); font-size: 11px; opacity: 0.6; line-height: 1.8; }
 </style>
 </head>
 <body>
@@ -308,8 +296,6 @@ class DevBoardPanel {
     <button class="new-note-btn" onclick="event.stopPropagation(); sendMsg({type:'newNote'})" title="New Note">+</button>
   </div>
   <div class="section-body open" id="body-notes">
-
-    <!-- Quick scratch pad -->
     <div class="scratch-wrap">
       <div class="scratch-toolbar">
         <span class="scratch-label">Quick Scratch</span>
@@ -320,10 +306,7 @@ class DevBoardPanel {
       </div>
       <textarea id="notepad" placeholder="Quick thoughts, links, snippets...">${scratchEscaped}</textarea>
     </div>
-
-    <!-- Saved notes list -->
     <div id="notes-content"></div>
-
   </div>
 </div>
 
@@ -344,7 +327,6 @@ class DevBoardPanel {
     document.getElementById(id)?.classList.toggle('open');
   }
 
-  // ── TODO rendering ──
   function renderTodos(todos) {
     const el = document.getElementById('todos-content');
     if (!todos || todos.length === 0) {
@@ -374,7 +356,6 @@ class DevBoardPanel {
     }).join('');
   }
 
-  // ── Notes list rendering ──
   function renderNotes(names) {
     const el = document.getElementById('notes-content');
     if (!names || names.length === 0) {
@@ -392,7 +373,6 @@ class DevBoardPanel {
     }).join('');
   }
 
-  // ── Scratch auto-save ──
   const textarea = document.getElementById('notepad');
   const charCount = document.getElementById('char-count');
   const savedFlash = document.getElementById('saved-flash');
@@ -417,13 +397,11 @@ class DevBoardPanel {
 
   updateCharCount();
 
-  // ── Message handler ──
   window.addEventListener('message', ({ data }) => {
     if (data.type === 'updateTodos') renderTodos(data.todos);
     if (data.type === 'updateNotes') renderNotes(data.names);
   });
 
-  // ── Initial render ──
   renderTodos(${todosJson});
   renderNotes(${notesJson});
 </script>
@@ -432,4 +410,4 @@ class DevBoardPanel {
   }
 }
 
-module.exports = { DevBoardPanel };
+module.exports = { TodoNexusPanel };

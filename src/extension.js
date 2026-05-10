@@ -1,19 +1,17 @@
 const vscode = require('vscode');
-const { DevBoardPanel } = require('./devboardPanel');
+const { TodoNexusPanel } = require('./TodonexusPanel');
 
 function activate(context) {
-  const provider = new DevBoardPanel(context);
+  const provider = new TodoNexusPanel(context);
 
-  vscode.window.registerWebviewViewProvider('devboard.panel', provider, {
+  vscode.window.registerWebviewViewProvider('todonexus.panel', provider, {
     webviewOptions: { retainContextWhenHidden: true }
   });
 
-  // Refresh command (button in panel title)
-  vscode.commands.registerCommand('devboard.refresh', () => {
+  vscode.commands.registerCommand('todonexus.refresh', () => {
     provider.refresh();
   });
 
-  // Auto-refresh TODOs on save
   vscode.workspace.onDidSaveTextDocument(() => provider.refresh());
 }
 

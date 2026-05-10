@@ -1,14 +1,14 @@
 {
-  "name": "devboard",
-  "displayName": "DevBoard",
-  "description": "Your developer dashboard — TODO tracker, pinned files, and project notes in the sidebar.",
+  "name": "todonexus",
+  "displayName": "TodoNexus",
+  "description": "Your developer dashboard — TODO tracker and project notes in the sidebar.",
   "version": "1.0.0",
   "engines": { "vscode": "^1.75.0" },
   "categories": ["Other"],
   "publisher": "melvsanity",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Melvsanity/DevBoard-VsCode-Extension.git"
+    "url": "https://github.com/Melvsanity/TodoNexus-extension.git"
   },
   "activationEvents": ["onStartupFinished"],
   "icon": "images/devboard-extension-icon.png",
@@ -17,17 +17,17 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "devboard",
-          "title": "DevBoard",
+          "id": "todonexus",
+          "title": "TodoNexus",
           "icon": "images/devboard-icon.svg"
         }
       ]
     },
     "views": {
-      "devboard": [
+      "todonexus": [
         {
-          "id": "devboard.panel",
-          "name": "DevBoard",
+          "id": "todonexus.panel",
+          "name": "TodoNexus",
           "type": "webview",
           "icon": "images/devboard-extension-icon.png"
         }
@@ -35,7 +35,7 @@
     },
     "commands": [
       {
-        "command": "devboard.refresh",
+        "command": "todonexus.refresh",
         "title": "Refresh TODOs",
         "icon": "$(refresh)"
       }
@@ -43,8 +43,8 @@
     "menus": {
       "view/title": [
         {
-          "command": "devboard.refresh",
-          "when": "view == devboard.panel",
+          "command": "todonexus.refresh",
+          "when": "view == todonexus.panel",
           "group": "navigation"
         }
       ]

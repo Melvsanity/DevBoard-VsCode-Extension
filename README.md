@@ -1,17 +1,16 @@
 <div align="center">
 
-<img src="images/devboard-extension-icon.png" alt="DevBoard Logo" width="128" height="128" />
+<img src="images/todonexus-extension-icon.png" alt="TodoNexus Logo" width="128" height="128" />
 
-# DevBoard
+# TodoNexus
 
-**Your developer dashboard, living right in the sidebar.**
-
+**Your developer nexus for TODOs, notes, and workspace focus — all in the sidebar.**
 
 ![Version](https://img.shields.io/badge/version-1.0.0-pink?style=flat-square)
-![VS Code](https://img.shields.io/badge/VS%20Code-%5E1.75.0-blue?style=flat-square&logo=visualstudiocode)
+![VS Code](https://img.shields.io/badge/VS%20Code-%5E1.75.0-blue?style=flat-square\&logo=visualstudiocode)
 ![License](https://img.shields.io/badge/license-MIT-purple?style=flat-square)
 
-Track TODOs · Pin files · Take notes — all without leaving the editor.
+Track TODOs · Take notes · Stay focused — without leaving your editor.
 
 </div>
 
@@ -19,9 +18,15 @@ Track TODOs · Pin files · Take notes — all without leaving the editor.
 
 ## Overview
 
-DevBoard is a zero-config VSCode extension that gives you a personal dashboard in the sidebar. Everything lives in one unified panel that can't be accidentally closed or rearranged — it's always right there when you need it.
+TodoNexus is a zero-config VSCode extension that brings your development workflow into one unified sidebar hub. It automatically and continuously scans your entire workspace and **detects and tracks every important code comment in real time**, including:
 
-No external dependencies. No backend. No setup.
+**`TODO` · `FIXME` · `BUG` · `HACK` · `NOTE` · `XXX`**
+
+This means you never lose track of work again — tasks are surfaced instantly, grouped automatically, and always visible inside your sidebar.
+
+Everything updates as you code. No manual refresh needed.
+
+No setup. No backend. No distractions.
 
 ---
 
@@ -29,103 +34,118 @@ No external dependencies. No backend. No setup.
 
 ### 📋 TODO Tracker
 
-Never lose a `TODO` in your codebase again. DevBoard scans every source file in your project and groups comment tags by type so you always know what needs attention.
+Never lose a TODO again. TodoNexus scans your entire workspace and organizes comment tags into a clean, navigable view.
 
-- Detects **`TODO`**, **`FIXME`**, **`BUG`**, **`HACK`**, **`NOTE`**, and **`XXX`**
-- Color-coded and grouped by tag — highest priority first
-- Click any item to jump straight to that exact line
-- Auto-refreshes every time you save a file
-- Intelligently skips `node_modules`, `.git`, `dist`, `build`, and other non-source directories
+* Detects **`TODO`**, **`FIXME`**, **`BUG`**, **`HACK`**, **`NOTE`**, and **`XXX`**
+* Fully automatic scanning and live tracking across your project
+* Grouped by tag with color indicators
+* Click to jump directly to the exact line in code
+* Auto-refreshes on file save
+* Ignores `node_modules`, `dist`, `build`, `.git`, and other noise folders
 
-### 📎 Pinned Files
-
-Stop re-opening the same files over and over. Pin the files you're actively working on and they stay in your sidebar — even after closing tabs or restarting VSCode.
-
-- Right-click any file in the Explorer → **DevBoard: Pin File**
-- Pins persist across sessions and workspace restarts
-- Click any pin to open it instantly
-- Hover to reveal the unpin button
+---
 
 ### ✏️ Notes
 
-A persistent markdown scratch pad tied to your workspace. Jot down ideas, paste links, record decisions — it's always a glance away.
+A persistent workspace-aware markdown scratch system for ideas, reminders, and snippets.
 
-- Write freely inside the sidebar panel
-- Auto-saves 500ms after you stop typing
-- **Open in tab ↗** to expand into a full Markdown editor
-- Each workspace has its own independent notes
-- Saved as a real file at `.vscode/devboard-notes.md`
+* Fast sidebar note creation
+* Auto-saves while typing
+* Open notes in full editor tab
+* Stored per workspace for separation
+* Saved as `.vscode/todonexus-notes.md`
+
+---
+
+### 🧠 Quick Scratch Pad
+
+A lightweight always-available text area for temporary thoughts.
+
+* Instant autosave
+* Character counter
+* Perfect for quick snippets or debugging notes
 
 ---
 
 ## Installation
 
 **Via Marketplace:**
+
 1. Open VSCode
 2. Press `Ctrl+P` (or `Cmd+P` on Mac)
-3. Run `ext install melvsanity.devboard`
+3. Run:
+
+   ```
+   ext install melvsanity.todonexus
+   ```
 
 **Via VSIX:**
-1. Download the latest `.vsix` from [Releases](https://github.com/yourusername/devboard/releases)
-2. Open VSCode → Extensions → `···` menu → **Install from VSIX**
+
+1. Download the latest `.vsix` from [Releases](https://github.com/Melvsanity/TodoNexus/releases)
+2. Open VSCode → Extensions → `···` → **Install from VSIX**
 
 ---
 
 ## Usage
 
-Click the **DevBoard icon** in the Activity Bar to open the panel. All three sections are collapsible — click any section header to expand or collapse it.
+Click the **TodoNexus icon** in the Activity Bar to open the sidebar panel.
 
-### Pinning a file
-1. Right-click any file in the Explorer
-2. Select **DevBoard: Pin File**
-3. It appears instantly in the Pinned Files section
+### Using TODO Tracker
 
-### Refreshing TODOs
-Click **↻** in the TODO Tracker header, or just save any file — DevBoard refreshes automatically.
+* Save any file → TODOs update automatically
+* Click any item → jump to code location
 
-### Opening notes in a full tab
-Click **Open in tab ↗** inside the Notes section to open your notes as a full Markdown editor.
+### Creating Notes
+
+* Click **+** in Notes section
+* Open or delete notes directly from sidebar
+
+### Scratch Pad
+
+* Just type — it saves automatically
+* Use it for temporary thoughts, links, or debugging notes
 
 ---
 
 ## Supported Languages
 
-DevBoard scans TODO comments across all major file types:
+TodoNexus scans TODO comments across all major languages:
 
-| Category | Extensions |
-|---|---|
-| JavaScript / TypeScript | `js` `ts` `jsx` `tsx` |
-| Systems | `c` `cpp` `cs` `rs` `go` `swift` `kt` |
-| Backend | `py` `java` `rb` `php` |
-| Web | `vue` `html` `css` `scss` |
-| Config & Docs | `sh` `yaml` `yml` `md` |
+| Category                | Extensions                            |
+| ----------------------- | ------------------------------------- |
+| JavaScript / TypeScript | `js` `ts` `jsx` `tsx`                 |
+| Systems                 | `c` `cpp` `cs` `rs` `go` `swift` `kt` |
+| Backend                 | `py` `java` `rb` `php`                |
+| Web                     | `vue` `html` `css` `scss`             |
+| Config & Docs           | `sh` `yaml` `yml` `md`                |
 
 ---
 
 ## Gitignore
 
-To keep your project notes out of git, add this to your `.gitignore`:
+To avoid tracking workspace notes:
 
 ```gitignore
-.vscode/devboard-notes.md
+.vscode/todonexus-notes.md
 ```
 
 ---
 
 ## Requirements
 
-- VSCode `1.75.0` or higher
-- No other dependencies
+* VSCode `1.75.0` or higher
+* No dependencies
 
 ---
 
 ## Contributing
 
-Contributions are welcome! If you find a bug or have a feature idea:
+Contributions are welcome:
 
-1. [Open an issue](https://github.com/Melvsanity/DevBoard-VsCode-Extension/issues) to discuss it
-2. Fork the repo and create a branch
-3. Submit a pull request
+1. Open an issue
+2. Fork the repo
+3. Create a feature branch
+4. Submit a pull request
 
 ---
 
