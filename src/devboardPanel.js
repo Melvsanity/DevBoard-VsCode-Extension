@@ -17,7 +17,10 @@ class DevBoardPanel {
     webviewView.webview.onDidReceiveMessage(msg => {
       switch (msg.type) {
         case 'openTodo':
-          this._openFile(msg.filePath, msg.line);
+          this._openFile(msg.filePath, msg.line, msg.column);
+          break;
+        case 'refresh':
+          this.refresh();
           break;
         case 'openPin':
           this._openFile(msg.filePath);
@@ -83,10 +86,10 @@ class DevBoardPanel {
     return `devboard.notes.${folders ? folders[0].name : 'default'}`;
   }
 
-  _openFile(filePath, line = 0) {
+  _openFile(filePath, line = 0, column = 0) {
     vscode.workspace.openTextDocument(filePath).then(doc => {
       vscode.window.showTextDocument(doc).then(editor => {
-        const pos = new vscode.Position(line, 0);
+        const pos = new vscode.Position(line, column);
         editor.selection = new vscode.Selection(pos, pos);
         editor.revealRange(new vscode.Range(pos, pos), vscode.TextEditorRevealType.InCenter);
       });
@@ -446,13 +449,13 @@ class DevBoardPanel {
     }
     el.innerHTML = todos.map(({ tag, items }) => {
       const meta = TAG_META[tag] || { color: '#888', icon: '•' };
-      const itemsHtml = items.map(({ text, filePath, line }) => {
+      const itemsHtml = items.map(({ text, filePath, line, column }) => {
         const fileName = filePath.split(/[\\\\/]/).pop();
         const safeText = (text || tag).replace(/</g,'&lt;').replace(/>/g,'&gt;');
-        const safePath = filePath.replace(/\\\\/g,'\\\\').replace(/'/g,"\\\\'");
-        return \`<div class="todo-item" onclick="sendMsg({type:'openTodo',filePath:'\${safePath}',line:\${line}})">
+        const message = JSON.stringify({ type: 'openTodo', filePath, line, column: column || 0 }).replace(/"/g, '&quot;');
+        return \`<div class="todo-item" onclick="sendMsg(\${message})">
           <span class="todo-text">\${safeText}</span>
-          <span class="todo-loc">\${fileName}:\${line+1}</span>
+          <span class="todo-loc">\${fileName}:\${line+1}:\${(column || 0)+1}</span>
         </div>\`;
       }).join('');
 
@@ -482,11 +485,12 @@ class DevBoardPanel {
     el.innerHTML = pins.map(filePath => {
       const name = filePath.split(/[\\\\/]/).pop();
       const dir = filePath.split(/[\\\\/]/).slice(-2, -1)[0] || '';
-      const safe = filePath.replace(/\\\\/g,'\\\\').replace(/'/g,"\\\\'");
+      const openMessage = JSON.stringify({ type: 'openPin', filePath }).replace(/"/g, '&quot;');
+      const unpinMessage = JSON.stringify({ type: 'unpin', filePath }).replace(/"/g, '&quot;');
       return \`<div class="pin-item">
-        <span class="pin-name" onclick="sendMsg({type:'openPin',filePath:'\${safe}'})">\${name}</span>
+        <span class="pin-name" onclick="sendMsg(\${openMessage})">\${name}</span>
         <span class="pin-path">\${dir}</span>
-        <button class="unpin-btn" onclick="sendMsg({type:'unpin',filePath:'\${safe}'})" title="Unpin">✕</button>
+        <button class="unpin-btn" onclick="sendMsg(\${unpinMessage})" title="Unpin">✕</button>
       </div>\`;
     }).join('');
   }

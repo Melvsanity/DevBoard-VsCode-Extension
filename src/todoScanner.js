@@ -39,7 +39,8 @@ function scanTodos(workspaceFolders) {
       while ((match = TODO_PATTERN.exec(lines[i])) !== null) {
         const tag = match[1].toUpperCase();
         if (!byTag[tag]) byTag[tag] = [];
-        byTag[tag].push({ text: match[2].trim(), filePath, line: i });
+        const column = match.index + match[0].indexOf(match[1]);
+        byTag[tag].push({ text: match[2].trim(), filePath, line: i, column });
       }
     }
   }
