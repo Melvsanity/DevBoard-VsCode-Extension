@@ -1,6 +1,6 @@
 {
-  "name": "todonexus",
-  "displayName": "TodoNexus",
+  "name": "todo-nexus",
+  "displayName": "Todo Nexus",
   "description": "Your developer dashboard — TODO tracker and project notes in the sidebar.",
   "version": "1.0.0",
   "engines": { "vscode": "^1.75.0" },
@@ -11,15 +11,15 @@
     "url": "https://github.com/Melvsanity/TodoNexus-extension.git"
   },
   "activationEvents": ["onStartupFinished"],
-  "icon": "images/devboard-extension-icon.png",
+  "icon": "images/todonexus-icon.png",
   "main": "./src/extension.js",
   "contributes": {
     "viewsContainers": {
       "activitybar": [
         {
           "id": "todonexus",
-          "title": "TodoNexus",
-          "icon": "images/devboard-icon.svg"
+          "title": "Todo Nexus",
+          "icon": "images/todonexus-icon.svg"
         }
       ]
     },
@@ -27,9 +27,9 @@
       "todonexus": [
         {
           "id": "todonexus.panel",
-          "name": "TodoNexus",
+          "name": "Todo Nexus",
           "type": "webview",
-          "icon": "images/devboard-extension-icon.png"
+          "icon": "images/todonexus-icon.png"
         }
       ]
     },
